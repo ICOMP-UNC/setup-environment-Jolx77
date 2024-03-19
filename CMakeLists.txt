@@ -11,7 +11,7 @@ set(CMAKE_C_STANDARD 17)
 
 include_directories(include)
 
-file(GLOB_RESOURSE SOURCES "src/*.c")
+file(GLOB_RECURSE SOURCES "src/*.c")
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
