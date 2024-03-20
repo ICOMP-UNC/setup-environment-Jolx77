@@ -1,3 +1,0 @@
-/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/CMakeFiles/FirstProjectInCMake.dir
-/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/CMakeFiles/edit_cache.dir
-/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/CMakeFiles/rebuild_cache.dir
