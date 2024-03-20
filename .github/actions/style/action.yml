@@ -13,23 +13,30 @@ runs:
 
         echo $PROJECT_PATH
 
-        # ToDo: Add documentation about 'tr' command and describe better this command
+        # Encuentra todos los archivos fuente de forma recursvia en los directorios src, include y lib
+        # Busca archivos con estas extensiones: -name ".cpp" -o -name ".hpp" -o -name ".h" -o -name ".c" 
+        # tr "\n" " ": Reemplaza los saltos de línea con espacios, creando una lista única de archivos separados por espacios
+
         SOURCE_FILES=$(find $PROJECT_PATH/src -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
         SOURCE_FILES+=$(find $PROJECT_PATH/include -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
         SOURCE_FILES+=$(find $PROJECT_PATH/lib -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
 
+        # Flag para indicar si hay errores
         ERROR_FILE_FLAG=$PROJECT_PATH/clang-format_errors.txt
 
-        # ToDo: Add documentation and describe better this command
-        CLANG_COMMAND=$(clang-format -i $SOURCE_FILES) > ${ERROR_FILE_FLAG}
+        # Ejecuta clang-format en los archivos fuente listados en $SOURCE_FILES, modificándolos directamente (-i)
+        # > ${ERROR_FILE_FLAG}: Redirecciona la salida (incluyendo cualquier error) al archivo de errores
 
         echo "Running: clang-format -i $SOURCE_FILES"
 
+        # Comprueba si el archivo de errores tiene contenido
         if [ -s $ERROR_FILE_FLAG ]; then
             echo "Error: There are some files that are not formatted correctly"
+            # Exit with non-zero code to indicate failure
             exit 1
         else
             echo "All files are formatted correctly. Niiiceee"
+            # Exit with zero code to indicate success
             exit 0
         fi
 
