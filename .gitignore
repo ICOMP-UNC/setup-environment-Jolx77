@@ -13,7 +13,7 @@
 *.cmake
 
 # Build directory
-#/build/
+/build/
 
 # External directoy
 /external/
