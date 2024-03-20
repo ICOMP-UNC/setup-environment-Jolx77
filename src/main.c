@@ -3,7 +3,7 @@
 
 int main(int argc, char *argv[])
 {
-    printf("Holis, bienvenios al himalaia \n");
+    printf("Hola, bienvenios al himalaia \n");
     greetings();
     return 0;
 }
