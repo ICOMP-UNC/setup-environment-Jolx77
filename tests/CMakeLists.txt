@@ -4,7 +4,7 @@ message(${PROJECT_NAME})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
-file(GLOB TESTS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/unit/testUnitario.c)
+file(GLOB TESTS_FILES ${CMAKE_CURRENT_SOURCE_DIR}/unit/*.c)
 file(GLOB SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/../src/logic.c)
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/external/Unity/src)

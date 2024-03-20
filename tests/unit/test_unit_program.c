@@ -22,6 +22,7 @@ void test_logic_multiply(void)
 void test_logic_divide(void)
 {
     TEST_ASSERT_EQUAL(10.0, divide(50, 5));
+    TEST_ASSERT_EQUAL(-1.0, divide(50, 0));
     TEST_ASSERT_NOT_EQUAL(2.0, divide(2, 2));
 }
 
