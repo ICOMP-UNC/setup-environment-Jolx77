@@ -1,0 +1,28 @@
+Start testing: Mar 20 20:18 -03
+----------------------------------------------------------
+1/1 Testing: test_
+1/1 Test: test_
+Command: "/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/tests/test_"
+Directory: /home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/tests
+"test_" start time: Mar 20 20:18 -03
+Output:
+----------------------------------------------------------
+libgcov profiling error:/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/tests/CMakeFiles/test_.dir/__/src/logic.c.gcda:overwriting an existing profile data with a different timestamp
+libgcov profiling error:/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/build/tests/CMakeFiles/test_.dir/unit/test_unit_program.c.gcda:overwriting an existing profile data with a different timestamp
+/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/tests/unit/test_unit_program.c:40:test_logic_add:PASS
+/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/tests/unit/test_unit_program.c:41:test_logic_substract:PASS
+/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/tests/unit/test_unit_program.c:42:test_logic_multiply:PASS
+/home/joaquin/Documentos/TP1 sop2/setup-environment-Jolx77/tests/unit/test_unit_program.c:43:test_logic_divide:PASS
+
+-----------------------
+4 Tests 0 Failures 0 Ignored 
+OK
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"test_" end time: Mar 20 20:18 -03
+"test_" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Mar 20 20:18 -03
