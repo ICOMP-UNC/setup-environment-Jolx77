@@ -1,0 +1,49 @@
+name: "Style check"
+description: "Style check using clang-format"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Run clang-format"
+      shell: bash
+      run: |
+        # We only make check, not changes
+        # Use the find command with the variable
+        PROJECT_PATH=$(pwd)
+
+        echo $PROJECT_PATH
+
+        # Encuentra todos los archivos fuente de forma recursvia en los directorios src, include y lib
+        # Busca archivos con estas extensiones: -name ".cpp" -o -name ".hpp" -o -name ".h" -o -name ".c" 
+        # tr "\n" " ": Reemplaza los saltos de línea con espacios, creando una lista única de archivos separados por espacios
+
+        SOURCE_FILES=$(find $PROJECT_PATH/src -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
+        SOURCE_FILES+=$(find $PROJECT_PATH/include -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
+        SOURCE_FILES+=$(find $PROJECT_PATH/lib -type f \( -name "*.cpp" -or -name "*.hpp" -or -name "*.h" -or -name "*.c" \) | tr "\n" " ")
+
+        # Flag para indicar si hay errores
+        ERROR_FILE_FLAG=$PROJECT_PATH/clang-format_errors.txt
+
+        # Ejecuta clang-format en los archivos fuente listados en $SOURCE_FILES, modificándolos directamente (-i)
+        # > ${ERROR_FILE_FLAG}: Redirecciona la salida (incluyendo cualquier error) al archivo de errores
+
+        echo "Running: clang-format -i $SOURCE_FILES"
+
+        # Comprueba si el archivo de errores tiene contenido
+        if [ -s $ERROR_FILE_FLAG ]; then
+            echo "Error: There are some files that are not formatted correctly"
+            # Exit with non-zero code to indicate failure
+            exit 1
+        else
+            echo "All files are formatted correctly. Niiiceee"
+            # Exit with zero code to indicate success
+            exit 0
+        fi
+
+    # Upload errors as an artifact, when failed
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: Clang-format errors!!!
+        path: $PROJECT_PATH/clang-format_errors.txt
+        retention-days: 1

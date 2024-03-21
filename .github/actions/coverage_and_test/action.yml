@@ -1,0 +1,53 @@
+name: "Test and coverage check"
+description: "Test and coverage check with gcovr, pass if coverage is greater than 20%"
+
+runs:
+  using: "composite"
+  steps:
+    - name: "Run coverage"
+      shell: bash
+      run: |
+        PROJECT_PATH=$(pwd)
+
+
+        # Ejecutar pruebas unitarias
+        #  --test-dir build/tests: Especifica el directorio que contiene el conjunto de pruebas
+        #  --output-on-failure: Imprime los resultados de las pruebas solo en caso de fallos
+        
+        ctest --test-dir build/tests --output-on-failure
+
+        # Generar reporte de cobertura de código usando gcovr
+        #  -r $PROJECT_PATH: Establece el directorio raíz para el reporte de cobertura (relativo al directorio de trabajo actual)
+        #  .: Incluye todos los archivos fuente en el directorio actual y subdirectorios
+        #  > $PROJECT_PATH/coverage.txt: Redirige el reporte de salida a un archivo llamado 'coverage.txt'
+
+        gcovr -r $PROJECT_PATH . > $PROJECT_PATH/coverage.txt
+
+        echo "Running: gcovr -r $PROJECT_PATH ."
+
+        # Imprime el reporte de coverage
+        cat $PROJECT_PATH/coverage.txt
+
+        # Extraer el porcentaje de cobertura
+        #  grep "TOTAL" $PROJECT_PATH/coverage.txt: Filtra las líneas que contienen "TOTAL" (probablemente la línea de resumen)
+        #  awk '{print $NF}' | cut -d '%' -f 1: Extrae el valor numérico antes del símbolo de porcentaje (%) del último campo
+        COVERAGE_RESULT=$(grep "TOTAL" $PROJECT_PATH/coverage.txt | awk '{print $NF}' | cut -d '%' -f 1)
+
+        # Verificar si la cobertura esta dentro del umbral
+        #  -eq 1: Verifica si el resultado de la expresión es igual a 1 (verdadero)
+
+        if [ "$(echo "$COVERAGE_RESULT > 20" | bc)" -eq 1 ]; then
+            echo "Coverage is greater than 20%. Nice!"
+            exit 0
+        else
+            echo "Error: Coverage is less than or equal to 20%"
+            exit 1
+        fi
+
+    # Upload errors as an artifact, when failed
+    - uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: Tests or coverage errors!!!
+        path: $(pwd)/error_flag.txt 
+        retention-days: 1
