@@ -10,3 +10,4 @@ int main(int argc, char *argv[])
     printf("Llamando a la libreria dinamica desde el main, obtengo '%d'\n", static_lib_function("Chau, SOP2"));
     return 0;
 }
+
